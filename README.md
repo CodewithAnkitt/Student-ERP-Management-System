@@ -1,71 +1,46 @@
 <div align="center">
 
-# 🎓 Student ERP Management System
+  <!-- Animated Header Typing Effect -->
+  <a href="https://git.io/typing-svg">
+    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=32&duration=3000&pause=1000&color=00D26A&center=true&vCenter=true&width=650&lines=Student+ERP+Management+System;Centralized+Academic+Administration;Powered+by+Django+4.2+%2B+Python+3.8%2B;Role-Based+Access+Control" alt="Typing SVG" />
+  </a>
 
-[![Django Version](https://img.shields.io/badge/Django-4.2.24-092E20?style=for-the-badge&logo=django&logoColor=white)](https://www.djangoproject.com/)
-[![Python Version](https://img.shields.io/badge/Python-3.8+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
-[![Database](https://img.shields.io/badge/Database-SQLite%20%7C%20PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
-[![Frontend](https://img.shields.io/badge/Frontend-HTML5%20%7C%20CSS3%20%7C%20JS-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/)
-[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
+  <p align="center">
+    <strong>A next-generation, multi-tenant academic ERP engineered for modern educational institutions.</strong>
+  </p>
 
-<br>
+  <!-- Dynamic Status Badges -->
+  <p align="center">
+    <img src="https://img.shields.io/badge/Django-4.2.24-092E20?style=for-the-badge&logo=django&logoColor=white" alt="Django" />
+    <img src="https://img.shields.io/badge/Python-3.8+-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" />
+    <img src="https://img.shields.io/badge/Database-PostgreSQL%20%7C%20SQLite-4169E1?style=for-the-badge&logo=postgresql&logoColor=white" alt="Database" />
+    <img src="https://img.shields.io/badge/Architecture-MVT%20Pattern-FF6F00?style=for-the-badge&logo=buffer&logoColor=white" alt="Architecture" />
+    <img src="https://img.shields.io/badge/License-MIT-00C853?style=for-the-badge&logo=open-source-initiative&logoColor=white" alt="License" />
+  </p>
 
-**A modern, production-ready, role-based academic management ecosystem built on Django.**  
-*Streamlining administration, faculty workflows, and student life under a single unified architecture.*
-
-<br>
-
-[Explore Features](#-role-based-features) • [Quick Start](#-quick-start-guide) • [Architecture](#-system-architecture) • [Roadmap](#-future-roadmap)
-
----
+  <!-- Animated Wave Separator -->
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=0,2,4,6&height=80&section=header" width="100%" />
 
 </div>
 
-<br>
-
-## 📌 Executive Summary
-
-The **Student ERP Management System** solves administrative fragmentation in academic institutions by consolidating records, communication channels, financial logging, and evaluation metrics into a single multi-tenant workspace.
-
-### Core User Roles
-
-| Role | Access Level | Primary Scope |
-| :--- | :--- | :--- |
-| 👨‍💼 **HOD / Admin** | **Full System Access** | Academic sessions, staff & student registry, leaves, global alerts, fee structures |
-| 👨‍🏫 **Staff / Faculty** | **Restricted / Operational** | Subject management, attendance grading, internal tests, leave dispatch |
-| 🎓 **Student** | **Self-Service** | Attendance tracking, grade-sheet inspection, fee receipts, leave requests |
-
 ---
 
-## 🏗️ System Architecture
+## 📌 Platform Overview
+
+The **Student ERP Management System** eliminates operational friction by merging student performance metrics, institutional finance, attendance logs, and administrative governance into a single role-based ecosystem.
 
 ```text
-                                  ┌────────────────────────────────┐
-                                  │   Student ERP Web Platform    │
-                                  └───────────────┬────────────────┘
-                                                  │
-                 ┌────────────────────────────────┼────────────────────────────────┐
-                 ▼                                ▼                                ▼
-      ┌────────────────────┐            ┌────────────────────┐           ┌────────────────────┐
-      │  HOD / Admin View  │            │     Staff View     │           │    Student View    │
-      └──────────┬─────────┘            └──────────┬─────────┘           └──────────┬─────────┘
-                 │                                 │                                │
-                 └────────────────────────────────┼────────────────────────────────┘
-                                                  ▼
-                                 ┌───────────────────────────────────┐
-                                 │   Custom Role/Auth Middleware     │
-                                 └────────────────┬──────────────────┘
-                                                  ▼
-                                 ┌───────────────────────────────────┐
-                                 │       Django 4.2 Application      │
-                                 │  (Views, ORM Models, Form Engine) │
-                                 └────────────────┬──────────────────┘
-                                                  ▼
-                         ┌────────────────────────┴────────────────────────┐
-                         ▼                                                 ▼
-             ┌───────────────────────┐                         ┌───────────────────────┐
-             │ SQLite / PostgreSQL   │                         │ SMTP / Static Storage │
-             └───────────────────────┘                         └───────────────────────┘
+       ┌─────────────────────────────────────────────────────────────┐
+       │             Central Student ERP Platform                    │
+       └──────────────────────────────┬──────────────────────────────┘
+                                      │
+         ┌────────────────────────────┼────────────────────────────┐
+         ▼                            ▼                            ▼
+  👨‍💼 HOD / Admin              👨‍🏫 Staff Member              🎓 Student Portal
+  ├── Institutional Control   ├── Attendance Ledger        ├── Performance Tracker
+  ├── Staff & Student CRUD    ├── Marks / Gradebook        ├── Fee Status & Invoices
+  ├── Leave Management        ├── Student Roster           ├── Leave Applications
+  └── System Announcements    └── Internal Feedback        └── Campus Bulletins
 ```
 
 ---
@@ -87,66 +62,57 @@ The **Student ERP Management System** solves administrative fragmentation in aca
 
 ## 🛠️ Technology Stack
 
-| Layer | Technology | Purpose |
+<div align="center">
+
+| Core Component | Technology | Highlights |
 | :--- | :--- | :--- |
-| **Backend Framework** | `Python 3.8+` / `Django 4.2.24` | Core business logic, routing, and ORM layer |
-| **Database** | `SQLite` (Dev) / `PostgreSQL` (Prod) | Relational data persistence and transactional integrity |
-| **Frontend** | `HTML5`, `CSS3`, `JavaScript` | Dynamic user interfaces and responsive dashboards |
-| **Authentication** | `Django Auth` + Custom Middleware | Role-segregated session access control |
-| **Asset Pipeline** | `WhiteNoise` | Optimized static file streaming |
-| **Communication** | `SMTP` / Gmail Relay | Automated alerts, reminders, and verification emails |
+| **Backend Engine** | <img src="https://skillicons.dev/icons?i=python,django" height="20" /> `Django 4.2 / Python 3.8+` | Clean MVT architecture, ORM, Secure Auth Backend |
+| **Database Tier** | <img src="https://skillicons.dev/icons?i=postgres,sqlite" height="20" /> `PostgreSQL / SQLite` | Relational integrity, ACID compliance, optimized migrations |
+| **Frontend Layer** | <img src="https://skillicons.dev/icons?i=html,css,js,bootstrap" height="20" /> `HTML5, CSS3, JS, Bootstrap` | Responsive layouts, intuitive administrative dashboards |
+| **Asset Engine** | <img src="https://img.shields.io/badge/WhiteNoise-Static-blue?style=flat-square" /> `WhiteNoise` | Production-optimized static asset streaming |
+| **Notification Rail** | <img src="https://img.shields.io/badge/SMTP-Gmail_Relay-red?style=flat-square" /> `EmailBackend` | Automated dispatch for fee alerts & credentials |
+
+</div>
 
 ---
 
-## 📂 Project Structure
+## 📂 Project Architecture
 
 ```bash
 student-erp-management-system/
 ├── main_app/                      # Core business logic application
-│   ├── migrations/                # Database schema versioning
-│   ├── static/                    # Component-level CSS, JavaScript, and icons
-│   ├── templates/                 # Role-segregated HTML templates
-│   ├── admin.py                   # Model registry for Django admin
-│   ├── EditResultView.py          # Examination marks update engine
+│   ├── migrations/                # Database schema migrations
+│   ├── static/                    # Dashboard UI assets (CSS, JS, media)
+│   ├── templates/                 # Role-segregated presentation layer
+│   ├── admin.py                   # Administrative model registrations
+│   ├── EditResultView.py          # Results entry and modification engine
 │   ├── EmailBackend.py            # Custom email authentication handler
-│   ├── forms.py                   # Form validation and dynamic field controls
-│   ├── hod_views.py               # Administrator operations controller
+│   ├── forms.py                   # Form validation and dynamic controls
+│   ├── hod_views.py               # Administrator / HOD route handlers
 │   ├── middleware.py              # Role-based access control interceptor
-│   ├── models.py                  # Relational database models
+│   ├── models.py                  # Database relational schema models
 │   ├── staff_views.py             # Faculty operations controller
-│   ├── student_views.py           # Student self-service controller
-│   ├── urls.py                    # App endpoint routing
-│   └── views.py                   # Base authentication and session views
-├── student_management_system/     # Root application configuration
-│   ├── settings.py                # Environment parameters and app registry
-│   ├── urls.py                    # Root URL dispatcher
-│   └── wsgi.py                    # WSGI gateway for web deployment
+│   ├── student_views.py           # Student portal route handlers
+│   ├── urls.py                    # Application endpoint dispatcher
+│   └── views.py                   # Authentication and core sessions
+├── student_management_system/     # Primary project configuration
+│   ├── settings.py                # Environment configurations and middleware
+│   ├── urls.py                    # Root route router
+│   └── wsgi.py                    # Production WSGI application gateway
 ├── static/                        # Collected static files
-├── media/                         # Uploaded user assets (profile images, receipts)
-├── manage.py                      # Django execution entry point
-├── requirements.txt               # Locked production dependencies
-└── README.md                      # Repository documentation
+├── media/                         # Uploaded files (receipts, avatars)
+├── manage.py                      # Django execution script
+├── requirements.txt               # Pinned project dependencies
+└── README.md                      # Documentation
 ```
-##  🗃️ Database Schema Overview
-```text
-CustomUser (AbstractUser)
-  ├── AdminProfile       ──> Institutional Operations & Approvals
-  ├── StaffProfile       ──> Assigned Subjects, Leaves, Result Logging
-  └── StudentProfile     ──> Course Mapping, Session, Attendance, Invoices
-        │
-        ├── AttendanceReport (FK: Attendance, Student)
-        ├── StudentResult    (FK: Subject, Student)
-        ├── StudentFee       (FK: Course, Student)
-        └── LeaveReport      (FK: Student / Staff)
-```
+
 ---
 
 ## 🚀 Quick Start Guide
 
 ### 1. Clone & Navigate
-
 ```bash
-git clone [https://github.com/YOUR-USERNAME/student-erp-management-system.git](https://github.com/YOUR-USERNAME/student-erp-management-system.git)
+git clone https://github.com/CodewithAnkitt/Student-ERP-Management-System.git
 cd student-erp-management-system
 ```
 
@@ -165,13 +131,11 @@ venv\Scripts\activate
 ```
 
 ### 3. Install Dependencies
-
 ```bash
 pip install -r requirements.txt
 ```
 
 ### 4. Database Setup & Initialization
-
 ```bash
 python manage.py makemigrations
 python manage.py migrate
@@ -179,22 +143,20 @@ python manage.py createsuperuser
 python manage.py collectstatic --noinput
 ```
 
-### 5. Run Development Server
-
+### 5. Start Development Server
 ```bash
 python manage.py runserver
 ```
-
-Open `http://127.0.0.1:8000/` in your browser.
+Visit `http://127.0.0.1:8000/` in your browser.
 
 ---
 
 ## ⚙️ Configuration & Environment
 
-Create a `.env` file in the project root directory to manage your environment-specific credentials:
+Create a `.env` file in the root directory:
 
 ```ini
-SECRET_KEY=your_django_secret_key_here
+SECRET_KEY=your_production_secret_key_here
 DEBUG=True
 ALLOWED_HOSTS=127.0.0.1,localhost
 
@@ -209,24 +171,13 @@ EMAIL_USE_TLS=True
 
 ---
 
-## 🔒 Production Hardening Checklist
-
-- [ ] Set `DEBUG = False` in production settings.
-- [ ] Bind exact production domains inside `ALLOWED_HOSTS`.
-- [ ] Migrate database from SQLite to **PostgreSQL**.
-- [ ] Enforce SSL/HTTPS redirect rules.
-- [ ] Configure `WhiteNoise` or Amazon S3 for static and media asset streaming.
-- [ ] Ensure `.env` is listed inside `.gitignore` to protect sensitive credentials.
-
----
-
 ## 📈 Future Roadmap
 
-- [ ] **Payment Gateway:** Direct online fee settlement via Stripe or Razorpay.
-- [ ] **Timetable Engine:** Algorithmic clash-free classroom and lab scheduling.
-- [ ] **Examinations:** Online timed assessments with automated grading.
-- [ ] **Push Notifications:** Firebase Cloud Messaging integration for real-time mobile updates.
-- [ ] **PDF Invoicing:** Automated fee receipts and marksheet export engines.
+- [ ] **Automated Payment Gateways:** Stripe and Razorpay integrations for instant fee clearance.
+- [ ] **AI-Driven Scheduling:** Algorithmic timetable generation avoiding faculty overlap.
+- [ ] **Online Examination Engine:** Timed assessments with automated evaluation.
+- [ ] **Real-Time Push Notifications:** Firebase Cloud Messaging (FCM) integration.
+- [ ] **Report Automation:** Headless PDF generation for transcripts and fee receipts.
 
 ---
 
@@ -235,15 +186,15 @@ EMAIL_USE_TLS=True
 1. **Fork** the repository.
 2. Create a feature branch:
    ```bash
-   git checkout -b feature/NewFeature
+   git checkout -b feature/AmazingFeature
    ```
-3. Commit your changes:
+3. Commit changes:
    ```bash
-   git commit -m "feat: Add NewFeature functionality"
+   git commit -m "feat: Add AmazingFeature"
    ```
-4. Push to the branch:
+4. Push to branch:
    ```bash
-   git push origin feature/NewFeature
+   git push origin feature/AmazingFeature
    ```
 5. Open a **Pull Request**.
 
@@ -251,18 +202,22 @@ EMAIL_USE_TLS=True
 
 ## 📜 License
 
-Distributed under the **MIT License**. See `LICENSE` for more information.
+Distributed under the **MIT License**. See `LICENSE` for details.
 
 ---
 
-## 👨‍💻 Author
-
-**Ankit Kumar**  
-*Student ERP Management System*  
-*Built with ❤️ using Python & Django.*
-
 <div align="center">
 
-⭐ **If you find this project useful, please consider giving it a star on GitHub!** ⭐
+### 👨‍💻 Developed by **Ankit Kumar**
+
+*Built with precision using Python & Django.*
+
+<br>
+
+<a href="https://github.com/YOUR-USERNAME/student-erp-management-system">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=0,2,4,6&height=90&section=footer" width="100%" />
+</a>
+
+⭐ **If you find this project helpful, give it a star on GitHub!** ⭐
 
 </div>
