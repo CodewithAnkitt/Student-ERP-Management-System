@@ -1,0 +1,58 @@
+{% extends 'main_app/base.html' %}
+{% load static %}
+{% block page_title %}{{page_title}}{% endblock page_title %}
+
+{% block content %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="card card-warning">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-bell mr-2"></i>Send Fee Reminder to Student</h3>
+                    </div>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="card-body">
+                            {% if messages %}
+                                {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }} alert-dismissible">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    {{ message }}
+                                </div>
+                                {% endfor %}
+                            {% endif %}
+
+                            <div class="form-group">
+                                <label>Select Student</label>
+                                <select name="student" class="form-control" required>
+                                    <option value="">-- Select Student --</option>
+                                    {% for student in students %}
+                                    <option value="{{ student.id }}">{{ student.admin.first_name }} {{ student.admin.last_name }} - {{ student.course.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Semester</label>
+                                <input type="number" name="semester" class="form-control" min="1" placeholder="Enter semester number" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Reminder Message</label>
+                                <textarea name="message" class="form-control" rows="5" placeholder="Enter reminder message..." required></textarea>
+                                <small class="form-text text-muted">This message will be displayed in the student's dashboard</small>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-warning">
+                                <i class="fas fa-paper-plane"></i> Send Reminder
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

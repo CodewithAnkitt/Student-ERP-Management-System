@@ -26,8 +26,8 @@ def login_page(request):
 def doLogin(request, **kwargs):
     if request.method != 'POST':
         return HttpResponse("<h4>Denied</h4>")
-    else:
-        #Google recaptcha
+    '''else:
+      Google recaptcha
         captcha_token = request.POST.get('g-recaptcha-response')
         captcha_url = "https://www.google.com/recaptcha/api/siteverify"
         captcha_key = "6LfswtgZAAAAABX9gbLqe-d97qE2g1JP8oUYritJ"
@@ -44,19 +44,19 @@ def doLogin(request, **kwargs):
                 return redirect('/')
         except:
             messages.error(request, 'Captcha could not be verified. Try Again')
-            return redirect('/')
-        
+            return redirect('/')-->
+        '''
         #Authenticate
-        user = EmailBackend.authenticate(request, username=request.POST.get('email'), password=request.POST.get('password'))
-        if user != None:
-            login(request, user)
-            if user.user_type == '1':
-                return redirect(reverse("admin_home"))
-            elif user.user_type == '2':
+    user = EmailBackend.authenticate(request, username=request.POST.get('email'), password=request.POST.get('password'))
+    if user != None:
+        login(request, user)
+        if user.user_type == '1':
+            return redirect(reverse("admin_home"))
+        elif user.user_type == '2':
                 return redirect(reverse("staff_home"))
-            else:
-                return redirect(reverse("student_home"))
         else:
+                return redirect(reverse("student_home"))
+    else:
             messages.error(request, "Invalid details")
             return redirect("/")
 

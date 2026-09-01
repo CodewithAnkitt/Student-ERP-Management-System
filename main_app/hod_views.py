@@ -12,6 +12,7 @@ from django.views.generic import UpdateView
 
 from .forms import *
 from .models import *
+from .models import Staff, CustomUser
 
 
 def admin_home(request):
@@ -48,7 +49,10 @@ def add_staff(request):
         if form.is_valid():
             first_name = form.cleaned_data.get('first_name')
             last_name = form.cleaned_data.get('last_name')
-            address = form.cleaned_data.get('address')
+            street = form.cleaned_data.get('street')
+            city = form.cleaned_data.get('city')
+            state = form.cleaned_data.get('state')
+            pin_code = form.cleaned_data.get('pin_code')
             email = form.cleaned_data.get('email')
             gender = form.cleaned_data.get('gender')
             password = form.cleaned_data.get('password')
@@ -61,7 +65,10 @@ def add_staff(request):
                 user = CustomUser.objects.create_user(
                     email=email, password=password, user_type=2, first_name=first_name, last_name=last_name, profile_pic=passport_url)
                 user.gender = gender
-                user.address = address
+                user.street = street
+                user.city = city
+                user.state = state
+                user.pin_code = pin_code
                 user.staff.course = course
                 user.save()
                 messages.success(request, "Successfully Added")
@@ -82,7 +89,10 @@ def add_student(request):
         if student_form.is_valid():
             first_name = student_form.cleaned_data.get('first_name')
             last_name = student_form.cleaned_data.get('last_name')
-            address = student_form.cleaned_data.get('address')
+            street = student_form.cleaned_data.get('street')
+            city = student_form.cleaned_data.get('city')
+            state = student_form.cleaned_data.get('state')
+            pin_code = student_form.cleaned_data.get('pin_code')
             email = student_form.cleaned_data.get('email')
             gender = student_form.cleaned_data.get('gender')
             password = student_form.cleaned_data.get('password')
@@ -96,7 +106,10 @@ def add_student(request):
                 user = CustomUser.objects.create_user(
                     email=email, password=password, user_type=3, first_name=first_name, last_name=last_name, profile_pic=passport_url)
                 user.gender = gender
-                user.address = address
+                user.street = street
+                user.city = city
+                user.state = state
+                user.pin_code = pin_code
                 user.student.session = session
                 user.student.course = course
                 user.save()
@@ -118,9 +131,13 @@ def add_course(request):
     if request.method == 'POST':
         if form.is_valid():
             name = form.cleaned_data.get('name')
+            fee = form.cleaned_data.get('fee')
+            duration = form.cleaned_data.get('duration')
             try:
                 course = Course()
                 course.name = name
+                course.fee = fee
+                course.duration = duration
                 course.save()
                 messages.success(request, "Successfully Added")
                 return redirect(reverse('add_course'))
@@ -228,7 +245,10 @@ def edit_staff(request, staff_id):
                 user.first_name = first_name
                 user.last_name = last_name
                 user.gender = gender
-                user.address = address
+                user.street = form.cleaned_data.get('street', '')
+                user.city = form.cleaned_data.get('city', '')
+                user.state = form.cleaned_data.get('state', '')
+                user.pin_code = form.cleaned_data.get('pin_code', '')
                 staff.course = course
                 user.save()
                 staff.save()
@@ -279,7 +299,10 @@ def edit_student(request, student_id):
                 user.last_name = last_name
                 student.session = session
                 user.gender = gender
-                user.address = address
+                user.street = form.cleaned_data.get('street', '')
+                user.city = form.cleaned_data.get('city', '')
+                user.state = form.cleaned_data.get('state', '')
+                user.pin_code = form.cleaned_data.get('pin_code', '')
                 student.course = course
                 user.save()
                 student.save()
@@ -304,9 +327,13 @@ def edit_course(request, course_id):
     if request.method == 'POST':
         if form.is_valid():
             name = form.cleaned_data.get('name')
+            fee = form.cleaned_data.get('fee')
+            duration = form.cleaned_data.get('duration')
             try:
                 course = Course.objects.get(id=course_id)
                 course.name = name
+                course.fee = fee
+                course.duration = duration
                 course.save()
                 messages.success(request, "Successfully Updated")
             except:
@@ -543,6 +570,10 @@ def admin_view_profile(request):
                 first_name = form.cleaned_data.get('first_name')
                 last_name = form.cleaned_data.get('last_name')
                 password = form.cleaned_data.get('password') or None
+                street = form.cleaned_data.get('street')
+                city = form.cleaned_data.get('city')
+                state = form.cleaned_data.get('state')
+                pin_code = form.cleaned_data.get('pin_code')
                 passport = request.FILES.get('profile_pic') or None
                 custom_user = admin.admin
                 if password != None:
@@ -554,6 +585,10 @@ def admin_view_profile(request):
                     custom_user.profile_pic = passport_url
                 custom_user.first_name = first_name
                 custom_user.last_name = last_name
+                custom_user.street = street
+                custom_user.city = city
+                custom_user.state = state
+                custom_user.pin_code = pin_code
                 custom_user.save()
                 messages.success(request, "Profile Updated!")
                 return redirect(reverse('admin_view_profile'))
@@ -638,16 +673,43 @@ def send_staff_notification(request):
 
 
 def delete_staff(request, staff_id):
-    staff = get_object_or_404(CustomUser, staff__id=staff_id)
-    staff.delete()
-    messages.success(request, "Staff deleted successfully!")
+    staff_obj = get_object_or_404(Staff, id=staff_id)
+    try:
+        # Delete related records first
+        NotificationStaff.objects.filter(staff=staff_obj).delete()
+        FeedbackStaff.objects.filter(staff=staff_obj).delete()
+        LeaveReportStaff.objects.filter(staff=staff_obj).delete()
+        
+        # Delete staff and user
+        admin_user = staff_obj.admin
+        staff_obj.delete()
+        admin_user.delete()
+        
+        messages.success(request, "Faculty deleted successfully!")
+    except Exception as e:
+        messages.error(request, f"Could not delete faculty: {str(e)}")
     return redirect(reverse('manage_staff'))
 
 
 def delete_student(request, student_id):
-    student = get_object_or_404(CustomUser, student__id=student_id)
-    student.delete()
-    messages.success(request, "Student deleted successfully!")
+    try:
+        student = get_object_or_404(Student, id=student_id)
+        
+        # Delete related records first
+        AttendanceReport.objects.filter(student=student).delete()
+        StudentResult.objects.filter(student=student).delete()
+        NotificationStudent.objects.filter(student=student).delete()
+        FeedbackStudent.objects.filter(student=student).delete()
+        LeaveReportStudent.objects.filter(student=student).delete()
+        
+        # Delete student and user
+        admin_user = student.admin
+        student.delete()
+        admin_user.delete()
+        
+        messages.success(request, "Student deleted successfully!")
+    except Exception as e:
+        messages.error(request, f"Could not delete student: {str(e)}")
     return redirect(reverse('manage_student'))
 
 
@@ -664,8 +726,15 @@ def delete_course(request, course_id):
 
 def delete_subject(request, subject_id):
     subject = get_object_or_404(Subject, id=subject_id)
-    subject.delete()
-    messages.success(request, "Subject deleted successfully!")
+    try:
+        # Delete related records first
+        Attendance.objects.filter(subject=subject).delete()
+        StudentResult.objects.filter(subject=subject).delete()
+        
+        subject.delete()
+        messages.success(request, "Subject deleted successfully!")
+    except Exception as e:
+        messages.error(request, f"Could not delete subject: {str(e)}")
     return redirect(reverse('manage_subject'))
 
 
@@ -678,3 +747,40 @@ def delete_session(request, session_id):
         messages.error(
             request, "There are students assigned to this session. Please move them to another session.")
     return redirect(reverse('manage_session'))
+
+
+def send_fee_reminder(request):
+    students = Student.objects.all()
+    context = {
+        'students': students,
+        'page_title': 'Send Fee Reminder'
+    }
+    
+    if request.method == 'POST':
+        student_id = request.POST.get('student')
+        semester = request.POST.get('semester')
+        message = request.POST.get('message')
+        
+        try:
+            student = get_object_or_404(Student, id=student_id)
+            reminder = FeeReminder(
+                student=student,
+                semester=semester,
+                message=message
+            )
+            reminder.save()
+            messages.success(request, f"Fee reminder sent to {student.admin.first_name} {student.admin.last_name}")
+            return redirect(reverse('send_fee_reminder'))
+        except Exception as e:
+            messages.error(request, f"Could not send reminder: {str(e)}")
+    
+    return render(request, 'hod_template/send_fee_reminder.html', context)
+
+
+def manage_fee_payments(request):
+    payments = FeePayment.objects.all().order_by('-created_at')
+    context = {
+        'payments': payments,
+        'page_title': 'Manage Fee Payments'
+    }
+    return render(request, 'hod_template/manage_fee_payments.html', context)

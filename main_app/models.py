@@ -39,7 +39,7 @@ class Session(models.Model):
 
 
 class CustomUser(AbstractUser):
-    USER_TYPE = ((1, "HOD"), (2, "Staff"), (3, "Student"))
+    USER_TYPE = ((1, "HOD"), (2, "Faculty"), (3, "Student"))
     GENDER = [("M", "Male"), ("F", "Female")]
     
     
@@ -49,6 +49,10 @@ class CustomUser(AbstractUser):
     gender = models.CharField(max_length=1, choices=GENDER)
     profile_pic = models.ImageField()
     address = models.TextField()
+    street = models.CharField(max_length=255, blank=True, default='')
+    city = models.CharField(max_length=100, blank=True, default='')
+    state = models.CharField(max_length=100, blank=True, default='')
+    pin_code = models.CharField(max_length=10, blank=True, default='')
     fcm_token = models.TextField(default="")  # For firebase notifications
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -57,7 +61,7 @@ class CustomUser(AbstractUser):
     objects = CustomUserManager()
 
     def __str__(self):
-        return self.last_name + ", " + self.first_name
+        return self.first_name + " " + self.last_name
 
 
 class Admin(models.Model):
@@ -66,7 +70,16 @@ class Admin(models.Model):
 
 
 class Course(models.Model):
+    DURATION_CHOICES = (
+        (2, '2 Years'),
+        (3, '3 Years'),
+        (4, '4 Years'),
+        (5, '5 Years'),
+    )
+    
     name = models.CharField(max_length=120)
+    fee = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    duration = models.IntegerField(choices=DURATION_CHOICES, default=4)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -80,15 +93,19 @@ class Student(models.Model):
     session = models.ForeignKey(Session, on_delete=models.DO_NOTHING, null=True)
 
     def __str__(self):
-        return self.admin.last_name + ", " + self.admin.first_name
+        return self.admin.first_name + " " + self.admin.last_name
 
 
 class Staff(models.Model):
-    course = models.ForeignKey(Course, on_delete=models.DO_NOTHING, null=True, blank=False)
+    course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True, blank=False)
     admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
 
+    class Meta:
+        verbose_name = "Faculty"
+        verbose_name_plural = "Faculty"
+
     def __str__(self):
-        return self.admin.last_name + " " + self.admin.first_name
+        return self.admin.first_name + " " + self.admin.last_name
 
 
 class Subject(models.Model):
@@ -173,6 +190,40 @@ class StudentResult(models.Model):
     exam = models.FloatField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+
+class FeePayment(models.Model):
+    PAYMENT_STATUS = [
+        ('Pending', 'Pending'),
+        ('Paid', 'Paid'),
+        ('Overdue', 'Overdue'),
+    ]
+    
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    semester = models.IntegerField()
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    payment_status = models.CharField(max_length=20, choices=PAYMENT_STATUS, default='Pending')
+    payment_date = models.DateTimeField(null=True, blank=True)
+    transaction_id = models.CharField(max_length=100, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ('student', 'semester')
+
+    def __str__(self):
+        return f"{self.student} - Semester {self.semester}"
+
+
+class FeeReminder(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    message = models.TextField()
+    semester = models.IntegerField()
+    is_read = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Reminder for {self.student} - Semester {self.semester}"
 
 
 @receiver(post_save, sender=CustomUser)

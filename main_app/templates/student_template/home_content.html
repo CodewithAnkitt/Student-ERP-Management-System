@@ -4,6 +4,29 @@
 {% block content %}
 <section class="content">
     <div class="container-fluid">
+        <!-- Fee Reminders Section -->
+        {% if fee_reminders %}
+        <div class="row">
+            <div class="col-md-12">
+                {% for reminder in fee_reminders %}
+                <div class="alert alert-warning alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h5><i class="icon fas fa-exclamation-triangle"></i> Fee Payment Reminder - Semester {{ reminder.semester }}</h5>
+                    <p>{{ reminder.message }}</p>
+                    <small class="text-muted">Sent on: {{ reminder.created_at|date:"d M, Y h:i A" }}</small>
+                    <br>
+                    <a href="{% url 'student_fee_payment' %}" class="btn btn-sm btn-warning mt-2">
+                        <i class="fas fa-credit-card"></i> Pay Now
+                    </a>
+                    <a href="{% url 'student_fee_reminders' %}" class="btn btn-sm btn-secondary mt-2">
+                        <i class="fas fa-eye"></i> View All Reminders
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        
         <!-- Small boxes (Stat box) -->
         <div class="row">
             <div class="col-lg-3 col-6">
@@ -114,6 +137,10 @@
                         </div>  
                         </section>
 {% endblock content %}
+
+{% block chart_js %}
+<script src="{% static 'plugins/chart.js/Chart.min.js'%}"></script>
+{% endblock chart_js %}
 
 {% block custom_js %}
   <script>

@@ -1,18 +1,4 @@
-"""student_management_system URL Configuration
 
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/3.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.urls import path
 
 from main_app.EditResultView import EditResultView
@@ -129,5 +115,17 @@ urlpatterns = [
          name="student_view_notification"),
     path('student/view/result/', student_views.student_view_result,
          name='student_view_result'),
+    path('student/fee/payment/', student_views.student_fee_payment,
+         name='student_fee_payment'),
+    path('student/fee/receipt/', student_views.student_fee_receipt,
+         name='student_fee_receipt'),
+    path('student/fee/reminders/', student_views.student_fee_reminders,
+         name='student_fee_reminders'),
+    
+    # Admin Fee Management
+    path('admin/fee/reminder/', hod_views.send_fee_reminder,
+         name='send_fee_reminder'),
+    path('admin/fee/manage/', hod_views.manage_fee_payments,
+         name='manage_fee_payments'),
 
 ]

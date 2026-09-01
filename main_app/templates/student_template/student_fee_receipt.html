@@ -1,0 +1,65 @@
+{% extends 'main_app/base.html' %}
+{% load static %}
+{% block page_title %}{{page_title}}{% endblock page_title %}
+
+{% block content %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-success">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-receipt mr-2"></i>Fee Receipts</h3>
+                    </div>
+                    <div class="card-body">
+                        {% if payments %}
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Receipt #</th>
+                                        <th>Semester</th>
+                                        <th>Amount Paid</th>
+                                        <th>Payment Date</th>
+                                        <th>Transaction ID</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for payment in payments %}
+                                    <tr>
+                                        <td>#{{ payment.id }}</td>
+                                        <td>Semester {{ payment.semester }}</td>
+                                        <td><strong>₹{{ payment.amount }}</strong></td>
+                                        <td>{{ payment.payment_date|date:"d M, Y h:i A" }}</td>
+                                        <td><code>{{ payment.transaction_id }}</code></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-info" onclick="printReceipt({{ payment.id }})">
+                                                <i class="fas fa-print"></i> Print
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {% else %}
+                        <div class="alert alert-warning">
+                            <i class="icon fas fa-exclamation-triangle"></i>
+                            No payment receipts available yet.
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+function printReceipt(paymentId) {
+    alert('Print functionality for receipt #' + paymentId + ' will be implemented');
+    // You can implement actual print functionality here
+}
+</script>
+{% endblock content %}

@@ -1,6 +1,70 @@
 {% extends 'main_app/base.html' %}
 {% load static %}
 {% block page_title %}{{page_title}}{% endblock page_title %}
+
+{% block custom_css %}
+<style>
+    /* Modern Gradient Color Scheme for Staff */
+    .small-box.bg-gradient-teal {
+        background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%) !important;
+        color: white;
+    }
+    
+    .small-box.bg-gradient-indigo {
+        background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%) !important;
+        color: white;
+    }
+    
+    .small-box.bg-gradient-pink {
+        background: linear-gradient(135deg, #ee0979 0%, #ff6a00 100%) !important;
+        color: white;
+    }
+    
+    .small-box.bg-gradient-cyan {
+        background: linear-gradient(135deg, #0093E9 0%, #80D0C7 100%) !important;
+        color: white;
+    }
+    
+    .small-box {
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .small-box:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+    
+    .small-box .icon {
+        font-size: 70px;
+        opacity: 0.3;
+    }
+    
+    .card.card-modern-teal {
+        border-top: 3px solid #11998e;
+        box-shadow: 0 2px 10px rgba(17, 153, 142, 0.1);
+    }
+    
+    .card.card-modern-teal .card-header {
+        background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        color: white;
+        border-radius: 0;
+    }
+    
+    .card.card-modern-indigo {
+        border-top: 3px solid #6a11cb;
+        box-shadow: 0 2px 10px rgba(106, 17, 203, 0.1);
+    }
+    
+    .card.card-modern-indigo .card-header {
+        background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+        color: white;
+        border-radius: 0;
+    }
+</style>
+{% endblock custom_css %}
+
 {% block content %}
 <section class="content">
     <div class="container-fluid">
@@ -8,61 +72,53 @@
         <div class="row">
             <div class="col-lg-3 col-6">
                 <!-- small box -->
-                <div class="small-box bg-info">
+                <div class="small-box bg-gradient-teal">
                     <div class="inner">
                         <h3>{{total_students}}</h3>
-
                         <p>Total Students</p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-bag"></i>
+                        <i class="fas fa-user-graduate"></i>
                     </div>
-                   
                 </div>
             </div>
             <!-- ./col -->
             <div class="col-lg-3 col-6">
                 <!-- small box -->
-                <div class="small-box bg-success">
+                <div class="small-box bg-gradient-indigo">
                     <div class="inner">
                         <h3>{{total_attendance}}</h3>
-
                         <p>Total Attendance Taken</p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-stats-bars"></i>
+                        <i class="fas fa-clipboard-check"></i>
                     </div>
-                   
                 </div>
             </div>
             <!-- ./col -->
             <div class="col-lg-3 col-6">
                 <!-- small box -->
-                <div class="small-box bg-warning">
+                <div class="small-box bg-gradient-pink">
                     <div class="inner">
                         <h3>{{total_leave}}</h3>
-
                         <p>Total Leave Applied</p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-person-add"></i>
+                        <i class="fas fa-calendar-times"></i>
                     </div>
-                   
                 </div>
             </div>
             <!-- ./col -->
             <div class="col-lg-3 col-6">
                 <!-- small box -->
-                <div class="small-box bg-danger">
+                <div class="small-box bg-gradient-cyan">
                     <div class="inner">
                         <h3>{{total_subject}}</h3>
-
                         <p>Total Subjects</p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-pie-graph"></i>
+                        <i class="fas fa-book-open"></i>
                     </div>
-                   
                 </div>
             </div>
             <!-- ./col -->
@@ -71,10 +127,10 @@
         <!-- Main row -->
         <div class="row">
             <div class="col-md-6">
-                <!-- LINE CHART -->
-                <div class="card card-secondary">
+                <!-- PIE CHART -->
+                <div class="card card-modern-teal">
                   <div class="card-header">
-                    <h3 class="card-title">{{page_title}}</h3>
+                    <h3 class="card-title"><i class="fas fa-chart-pie mr-2"></i>Attendance vs Leave</h3>
     
                     <div class="card-tools">
                       <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
@@ -86,34 +142,39 @@
                     <div class="chart">
                       <canvas id="pieChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
                     </div>
-                  </div></div>
+                  </div>
+                </div>
+                <!-- /.card -->
+            </div>
+            <div class="col-md-6">
+                <div class="card card-modern-indigo">
+                  <div class="card-header">
+                    <h3 class="card-title"><i class="fas fa-chart-bar mr-2"></i>Attendance Per Subject</h3>
+
+                    <div class="card-tools">
+                      <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                      </button>
+                      <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="chart">
+                      <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                    </div>
+                  </div>
                   <!-- /.card-body -->
                 </div>
-                <div class="col-md-6">
-                    <div class="card card-secondary">
-              <div class="card-header">
-                <h3 class="card-title">{{page_title}}</h3>
-
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-                  </button>
-                  <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
-                </div>
-              </div>
-              <div class="card-body">
-                <div class="chart">
-                  <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                </div>
-              </div>
-              <!-- /.card-body -->
             </div>
-                </div>
             <!-- right col -->
         </div>
         <!-- /.row (main row) -->
     </div><!-- /.container-fluid -->
 </section>
 {% endblock content %}
+
+{% block chart_js %}
+<script src="{% static 'plugins/chart.js/Chart.min.js'%}"></script>
+{% endblock chart_js %}
 
 {% block custom_js %}
   <script>
@@ -123,7 +184,9 @@
             datasets: [
               {
                 data:[{{total_attendance}}, {{total_leave}}],
-                backgroundColor : ['#00a65a', '#f39c12',],
+                backgroundColor : ['#11998e', '#ee0979'],
+                borderWidth: 0,
+                hoverOffset: 10
               }
             ]
           }
@@ -132,11 +195,21 @@
         var pieOptions     = {
           maintainAspectRatio : false,
           responsive : true,
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: {
+                padding: 20,
+                font: {
+                  size: 14
+                }
+              }
+            }
+          }
         }
-        //Create pie or douhnut chart
-        // You can switch between pie and douhnut using the method below.
+        //Create doughnut chart
         var pieChart = new Chart(pieChartCanvas, {
-          type: 'pie',
+          type: 'doughnut',
           data: pieData,
           options: pieOptions      
         });
@@ -144,41 +217,44 @@
         var subject_list = {{ subject_list|safe|escape }};
         var attendance_list = {{ attendance_list }};
   
-            var barChartData = {
-      labels  : subject_list,
-      datasets: [
-      {
-        label               : 'Attendance Per Subject',
-        backgroundColor     : '#6c757d',
-        borderColor         : 'rgba(60,141,188,0.8)',
-        pointRadius          : false,
-        pointColor          : '#3b8bba',
-        pointStrokeColor    : 'rgba(60,141,188,1)',
-        pointHighlightFill  : '#fff',
-        pointHighlightStroke: 'rgba(60,141,188,1)',
-        data                : attendance_list
-      }, 
-      
-      ]
-    }
+        var barChartData = {
+          labels  : subject_list,
+          datasets: [
+            {
+              label               : 'Attendance Count',
+              backgroundColor     : 'rgba(106, 17, 203, 0.8)',
+              borderColor         : '#6a11cb',
+              borderWidth         : 2,
+              borderRadius        : 5,
+              data                : attendance_list
+            }
+          ]
+        }
+        
         var barChartCanvas = $('#barChart').get(0).getContext('2d')
-        var temp0 = barChartData.datasets[0]
-        //var temp1 = areaChartData.datasets[1]
-        barChartData.datasets[0] = temp0
-       // barChartData.datasets[1] = temp0
     
-    var stackedBarChartOptions = {
-      responsive              : true,
-      maintainAspectRatio     : false,
-      scales: {
-        xAxes: [{
-          stacked: true,
-        }],
-        yAxes: [{
-          stacked: true
-        }]
-      }
-    }
+        var stackedBarChartOptions = {
+          responsive              : true,
+          maintainAspectRatio     : false,
+          plugins: {
+            legend: {
+              display: false
+            }
+          },
+          scales: {
+            x: {
+              grid: {
+                display: false
+              }
+            },
+            y: {
+              beginAtZero: true,
+              grid: {
+                color: 'rgba(0, 0, 0, 0.05)'
+              }
+            }
+          }
+        }
     
         var barChart = new Chart(barChartCanvas, {
           type: 'bar', 
@@ -186,92 +262,5 @@
           options: stackedBarChartOptions
         })
       })
-
-    
   </script>
-      <!-- The core Firebase JS SDK is always required and must be listed first -->
-      <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-app.js"></script>
-
-      <!-- TODO: Add SDKs for Firebase products that you want to use
-       https://firebase.google.com/docs/web/setup#available-libraries -->
-      <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-analytics.js"></script>
-      <script src="https://www.gstatic.com/firebasejs/7.22.1/firebase-messaging.js"></script>
-  
-  
-      <script>
-          // Your web app's Firebase configuration
-          // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-          var firebaseConfig = {
-              apiKey: "AIzaSyBarDWWHTfTMSrtc5Lj3Cdw5dEvjAkFwtM",
-              authDomain: "sms-with-django.firebaseapp.com",
-              databaseURL: "https://sms-with-django.firebaseio.com",
-              projectId: "sms-with-django",
-              storageBucket: "sms-with-django.appspot.com",
-              messagingSenderId: "945324593139",
-              appId: "1:945324593139:web:03fa99a8854bbd38420c86",
-              measurementId: "G-2F2RXTL9GT"
-          };
-          // Initialize Firebase
-          firebase.initializeApp(firebaseConfig)
-          const messaging = firebase.messaging();
-          function InitializeFireBaseMessaging() {
-              messaging
-                  .requestPermission()
-                  .then(function () {
-                      console.log("Notification Permission");
-                      return messaging.getToken();
-                  })
-                  .then(function (token) {
-                      console.log("Token : " + token);
-                      sendToServer(token);
-                  })
-                  .catch(function (reason) {
-                      console.log(reason)
-                  })
-          }
-          messaging.onMessage(function (payload) {
-              const notificationOption = {
-                  body: payload.notification.body,
-                  icon: payload.notification.icon,
-  
-              }
-              if (Notification.permission == 'granted') {
-                  var notification = new Notification(payload.notification.title, notificationOption);
-                  notification.onclick = function (event) {
-                      event.preventDefault();
-                      window.open(payload.notification.click_action, "_blank");
-                      notification.close();
-                  }
-              }
-              console.log(payload);
-          });
-          messaging.onTokenRefresh(function () {
-              messaging.getToken()
-                  .then(function (newToken) {
-                      console.log("New Token : " + newToken);
-                      sendToServer(newToken);
-
-                  })
-                  .catch(function (reason) {
-                      console.log(reason)
-                  })
-          })
-  
-          function sendToServer(token){
-            $.ajax({
-              url: "{% url 'staff_fcmtoken' %}",
-              type: 'POST',
-              data: {
-                  token: token,
-              }
-          }).done(function (response) {
-   
-             
-          }).fail(function (response) {
-          })
-
-          }
-          
-          InitializeFireBaseMessaging();
-      </script>
 {% endblock custom_js %}

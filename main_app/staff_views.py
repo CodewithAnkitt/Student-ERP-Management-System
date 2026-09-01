@@ -26,7 +26,7 @@ def staff_home(request):
         subject_list.append(subject.name)
         attendance_list.append(attendance_count)
     context = {
-        'page_title': 'Staff Panel - ' + str(staff.admin.last_name) + ' (' + str(staff.course) + ')',
+        'page_title': 'Staff Panel - ' + str(staff.admin.first_name) + ' (' + str(staff.course) + ')',
         'total_students': total_students,
         'total_attendance': total_attendance,
         'total_leave': total_leave,
@@ -63,7 +63,7 @@ def get_students(request):
         for student in students:
             data = {
                     "id": student.id,
-                    "name": student.admin.last_name + " " + student.admin.first_name
+                    "name": student.admin.first_name + " " + student.admin.last_name
                     }
             student_data.append(data)
         return JsonResponse(json.dumps(student_data), content_type='application/json', safe=False)
@@ -125,7 +125,7 @@ def get_student_attendance(request):
         student_data = []
         for attendance in attendance_data:
             data = {"id": attendance.student.admin.id,
-                    "name": attendance.student.admin.last_name + " " + attendance.student.admin.first_name,
+                    "name": attendance.student.admin.first_name + " " + attendance.student.admin.last_name,
                     "status": attendance.status}
             student_data.append(data)
         return JsonResponse(json.dumps(student_data), content_type='application/json', safe=False)
@@ -210,7 +210,10 @@ def staff_view_profile(request):
                 first_name = form.cleaned_data.get('first_name')
                 last_name = form.cleaned_data.get('last_name')
                 password = form.cleaned_data.get('password') or None
-                address = form.cleaned_data.get('address')
+                street = form.cleaned_data.get('street')
+                city = form.cleaned_data.get('city')
+                state = form.cleaned_data.get('state')
+                pin_code = form.cleaned_data.get('pin_code')
                 gender = form.cleaned_data.get('gender')
                 passport = request.FILES.get('profile_pic') or None
                 admin = staff.admin
@@ -223,7 +226,10 @@ def staff_view_profile(request):
                     admin.profile_pic = passport_url
                 admin.first_name = first_name
                 admin.last_name = last_name
-                admin.address = address
+                admin.street = street
+                admin.city = city
+                admin.state = state
+                admin.pin_code = pin_code
                 admin.gender = gender
                 admin.save()
                 staff.save()

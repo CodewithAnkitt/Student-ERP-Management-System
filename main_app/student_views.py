@@ -37,6 +37,10 @@ def student_home(request):
         subject_name.append(subject.name)
         data_present.append(present_count)
         data_absent.append(absent_count)
+    
+    # Get unread fee reminders
+    fee_reminders = FeeReminder.objects.filter(student=student, is_read=False).order_by('-created_at')[:3]
+    
     context = {
         'total_attendance': total_attendance,
         'percent_present': percent_present,
@@ -46,6 +50,7 @@ def student_home(request):
         'data_present': data_present,
         'data_absent': data_absent,
         'data_name': subject_name,
+        'fee_reminders': fee_reminders,
         'page_title': 'Student Homepage'
 
     }
@@ -148,7 +153,10 @@ def student_view_profile(request):
                 first_name = form.cleaned_data.get('first_name')
                 last_name = form.cleaned_data.get('last_name')
                 password = form.cleaned_data.get('password') or None
-                address = form.cleaned_data.get('address')
+                street = form.cleaned_data.get('street')
+                city = form.cleaned_data.get('city')
+                state = form.cleaned_data.get('state')
+                pin_code = form.cleaned_data.get('pin_code')
                 gender = form.cleaned_data.get('gender')
                 passport = request.FILES.get('profile_pic') or None
                 admin = student.admin
@@ -161,7 +169,10 @@ def student_view_profile(request):
                     admin.profile_pic = passport_url
                 admin.first_name = first_name
                 admin.last_name = last_name
-                admin.address = address
+                admin.street = street
+                admin.city = city
+                admin.state = state
+                admin.pin_code = pin_code
                 admin.gender = gender
                 admin.save()
                 student.save()
@@ -205,3 +216,72 @@ def student_view_result(request):
         'page_title': "View Results"
     }
     return render(request, "student_template/student_view_result.html", context)
+
+
+def student_fee_payment(request):
+    student = get_object_or_404(Student, admin=request.user)
+    course = student.course
+    
+    # Calculate total semesters based on course duration
+    total_semesters = course.duration * 2
+    fee_per_semester = course.fee / total_semesters
+    
+    # Get or create fee payment records for all semesters
+    payments = []
+    for sem in range(1, total_semesters + 1):
+        payment, created = FeePayment.objects.get_or_create(
+            student=student,
+            semester=sem,
+            defaults={'amount': fee_per_semester}
+        )
+        payments.append(payment)
+    
+    context = {
+        'payments': payments,
+        'total_fee': course.fee,
+        'fee_per_semester': fee_per_semester,
+        'total_semesters': total_semesters,
+        'page_title': 'Fee Payment'
+    }
+    
+    if request.method == 'POST':
+        semester = request.POST.get('semester')
+        transaction_id = request.POST.get('transaction_id')
+        
+        try:
+            payment = FeePayment.objects.get(student=student, semester=semester)
+            payment.payment_status = 'Paid'
+            payment.payment_date = datetime.now()
+            payment.transaction_id = transaction_id
+            payment.save()
+            messages.success(request, f"Payment for Semester {semester} recorded successfully!")
+            return redirect(reverse('student_fee_payment'))
+        except Exception as e:
+            messages.error(request, f"Payment failed: {str(e)}")
+    
+    return render(request, 'student_template/student_fee_payment.html', context)
+
+
+def student_fee_receipt(request):
+    student = get_object_or_404(Student, admin=request.user)
+    paid_payments = FeePayment.objects.filter(student=student, payment_status='Paid').order_by('semester')
+    
+    context = {
+        'payments': paid_payments,
+        'page_title': 'Fee Receipts'
+    }
+    return render(request, 'student_template/student_fee_receipt.html', context)
+
+
+def student_fee_reminders(request):
+    student = get_object_or_404(Student, admin=request.user)
+    reminders = FeeReminder.objects.filter(student=student).order_by('-created_at')
+    
+    # Mark reminders as read
+    reminders.update(is_read=True)
+    
+    context = {
+        'reminders': reminders,
+        'page_title': 'Fee Reminders'
+    }
+    return render(request, 'student_template/student_fee_reminders.html', context)

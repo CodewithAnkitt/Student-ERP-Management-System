@@ -1,271 +1,237 @@
-# Student Management System Created Using Django
-This is a Simple Student Management System Developed While Learning Django.
-Feel free to make changes based on your requirements.
+# Student Management System
 
-[Front-end Template](http://adminlte.io "Admin LTE.io")
+A comprehensive web-based Student Management System built with Django that enables educational institutions to manage students, staff, courses, attendance, results, and communications efficiently.
 
+## Features
 
-[Project Demo on YouTube](https://www.youtube.com/watch?v=kArCR96m7uo "Django Student Management System Demo")
+### Admin (HOD) Features
+- Manage staff members (add, edit, delete)
+- Manage students (add, edit, delete)
+- Manage courses and subjects
+- Manage academic sessions
+- View and manage attendance records
+- Send notifications to students and staff
+- Review and respond to feedback from students and staff
+- Approve/reject leave applications
+- View comprehensive dashboard with statistics
 
-And if you like this project, then ADD a STAR ⭐️  to this project 👆
-## Deployed to
-https://smswithdjango.herokuapp.com/
+### Staff Features
+- Take and update student attendance
+- Add and edit student results (test and exam scores)
+- Apply for leave
+- Submit feedback to admin
+- View assigned subjects and students
+- Receive notifications from admin
+- View personal profile
 
+### Student Features
+- View attendance records
+- View exam results
+- Apply for leave
+- Submit feedback to admin
+- Receive notifications from admin
+- View personal profile and course information
 
-## Features of this Project
+## Technology Stack
 
-### A. Admin Users Can
-1. See Overall Summary Charts of Students Performances, Staff Performances, Courses, Subjects, Leave, etc.
-2. Manage Staff (Add, Update and Delete)
-3. Manage Students (Add, Update and Delete)
-4. Manage Course (Add, Update and Delete)
-5. Manage Subjects (Add, Update and Delete)
-6. Manage Sessions (Add, Update and Delete)
-7. View Student Attendance
-8. Review and Reply Student/Staff Feedback
-9. Review (Approve/Reject) Student/Staff Leave
+- **Backend**: Django 4.2.24
+- **Database**: SQLite (default), PostgreSQL/MySQL support available
+- **Frontend**: HTML, CSS, JavaScript (templates)
+- **Authentication**: Custom email-based authentication
+- **File Storage**: WhiteNoise for static files
+- **Email**: SMTP backend for notifications
+- **Deployment**: Gunicorn-ready for production
 
-### B. Staff/Teachers Can
-1. See the Overall Summary Charts related to their students, their subjects, leave status, etc.
-2. Take/Update Students Attendance
-3. Add/Update Result
-4. Apply for Leave
-5. Send Feedback to HOD
+## Prerequisites
 
-### C. Students Can
-1. See the Overall Summary Charts related to their attendance, their subjects, leave status, etc.
-2. View Attendance
-3. View Result
-4. Apply for Leave
-5. Send Feedback to HOD
+- Python 3.8 or higher
+- pip (Python package manager)
+- Virtual environment (recommended)
 
+## Installation
 
-## 📸 ScreenShots
-
-<img src="ss/1.png"/>
-<img src="ss/2.png"/>
-<img src="ss/3.png"/>
-<img src="ss/4.png"/>
-<img src="ss/5.png"/>
-
-| Admin| Staff| Student |
-|------|-------|---------|
-|<img src="ss/admin5.png" width="400">|<img src="ss/staff1.png" width="400">|<img src="ss/student1.png" width="400">|
-|<img src="ss/admin2.png" width="400">|<img src="ss/staff2.png" width="400">|<img src="ss/student2.png" width="400">|
-|<img src="ss/admin3.png" width="400">|<img src="ss/staff3.png" width="400">|<img src="ss/student3.png" width="400">|
-|<img src="ss/admin4.png" width="400">|<img src="ss/staff4.png" width="400">|<img src="ss/student4.png" width="400">|
-|<img src="ss/admin1.png" width="400">|<img src="ss/staff5.png" width="400">|<img src="ss/student5.png" width="400">|
-|<img src="ss/admin6.png" width="400">|<img src="ss/staff6.png" width="400">|<img src="ss/student6.png" width="400">|
-
-
-
-## Support Developer
-1. Add a Star 🌟  to this 👆 Repository
-2. Follow on Twitter/Github
-
-
-## Passport/Images
-Images are from [Unsplash](https://unsplash.com)
-
-
-## How to Install and Run this project?
-
-### Pre-Requisites:
-1. Install Git Version Control
-[ https://git-scm.com/ ]
-
-2. Install Python Latest Version
-[ https://www.python.org/downloads/ ]
-
-3. Install Pip (Package Manager)
-[ https://pip.pypa.io/en/stable/installing/ ]
-
-*Alternative to Pip is Homebrew*
-
-### Installation
-**1. Create a Folder where you want to save the project**
-
-**2. Create a Virtual Environment and Activate**
-
-Install Virtual Environment First
-```
-$  pip install virtualenv
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd student_management_system
 ```
 
-Create Virtual Environment
+2. Create and activate a virtual environment:
+```bash
+# Windows
+python -m venv venv
+venv\Scripts\activate
 
-For Windows
-```
-$  python -m venv venv
-```
-For Mac
-```
-$  python3 -m venv venv
-```
-For Linux
-```
-$  virtualenv .
+# Linux/Mac
+python3 -m venv venv
+source venv/bin/activate
 ```
 
-Activate Virtual Environment
-
-For Windows
-```
-$  source venv/scripts/activate
+3. Install dependencies:
+```bash
+pip install -r requirements.txt
 ```
 
-For Mac
-```
-$  source venv/bin/activate
+4. Configure environment variables (optional):
+Create a `.env` file or update `settings.py` with your configurations:
+- Database settings
+- Email configuration
+- Secret key
+- Debug mode
+
+5. Run migrations:
+```bash
+python manage.py makemigrations
+python manage.py migrate
 ```
 
-For Linux
-```
-$  source bin/activate
-```
-
-**3. Clone this project**
-```
-$  git clone https://github.com/jobic10/student-management-using-django.git
+6. Create a superuser (admin):
+```bash
+python manage.py createsuperuser
 ```
 
-Then, Enter the project
-```
-$  cd student-management-using-django
+7. Collect static files:
+```bash
+python manage.py collectstatic
 ```
 
-**4. Install Requirements from 'requirements.txt'**
+8. Run the development server:
+```bash
+python manage.py runserver
+```
+
+9. Access the application at `http://127.0.0.1:8000/`
+
+## Project Structure
+
+```
+student_management_system/
+├── main_app/                   # Main application
+│   ├── migrations/            # Database migrations
+│   ├── static/                # Static files (CSS, JS, images)
+│   ├── templates/             # HTML templates
+│   ├── admin.py               # Admin configurations
+│   ├── models.py              # Database models
+│   ├── views.py               # Main views
+│   ├── hod_views.py           # Admin/HOD views
+│   ├── staff_views.py         # Staff views
+│   ├── student_views.py       # Student views
+│   ├── forms.py               # Form definitions
+│   ├── urls.py                # URL routing
+│   ├── middleware.py          # Custom middleware
+│   ├── EmailBackend.py        # Email authentication backend
+│   └── EditResultView.py      # Result editing view
+├── student_management_system/ # Project settings
+│   ├── settings.py            # Django settings
+│   ├── urls.py                # Root URL configuration
+│   ├── wsgi.py                # WSGI configuration
+│   └── asgi.py                # ASGI configuration
+├── media/                     # User uploaded files
+├── static/                    # Collected static files
+├── db.sqlite3                 # SQLite database
+├── manage.py                  # Django management script
+└── requirements.txt           # Python dependencies
+```
+
+## Database Models
+
+- **CustomUser**: Extended user model with email authentication
+- **Admin**: Admin/HOD profile
+- **Staff**: Staff member profile
+- **Student**: Student profile
+- **Course**: Academic courses
+- **Subject**: Course subjects
+- **Session**: Academic sessions/years
+- **Attendance**: Attendance records
+- **AttendanceReport**: Individual student attendance
+- **LeaveReportStudent**: Student leave applications
+- **LeaveReportStaff**: Staff leave applications
+- **FeedbackStudent**: Student feedback
+- **FeedbackStaff**: Staff feedback
+- **NotificationStudent**: Student notifications
+- **NotificationStaff**: Staff notifications
+- **StudentResult**: Student exam results
+
+## User Roles
+
+The system supports three user types:
+1. **HOD (Head of Department)** - Admin with full access
+2. **Staff** - Teachers/instructors with limited access
+3. **Student** - Students with view and self-service access
+
+## Authentication
+
+- Email-based authentication (no username required)
+- Custom authentication backend
+- Role-based access control via middleware
+- Session management
+
+## Configuration
+
+### Email Settings
+Update the following in `settings.py`:
 ```python
-$  pip3 install -r requirements.txt
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'your-email@example.com'
+EMAIL_HOST_PASSWORD = 'your-app-password'
+EMAIL_USE_TLS = True
 ```
 
-**5. Add the hosts**
-
-- Got to settings.py file 
-- Then, On allowed hosts, Use **[]** as your host. 
+### Database Configuration
+For production, configure PostgreSQL or MySQL:
 ```python
-ALLOWED_HOSTS = []
-```
-*Do not use the fault allowed settings in this repo. It has security risk!*
-
-
-**6. Now Run Server**
-
-Command for PC:
-```python
-$ python manage.py runserver
-```
-
-Command for Mac:
-```python
-$ python3 manage.py runserver
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'your_db_name',
+        'USER': 'your_db_user',
+        'PASSWORD': 'your_db_password',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
 ```
 
-Command for Linux:
-```python
-$ python3 manage.py runserver
-```
+## Deployment
 
-**7. Login Credentials**
+The application is configured for deployment with:
+- WhiteNoise for static file serving
+- Gunicorn as WSGI server
+- Database URL configuration via `dj-database-url`
 
-Create Super User (HOD)
-Command for PC:
-```
-$  python manage.py createsuperuser
-```
+For production deployment:
+1. Set `DEBUG = False` in settings
+2. Configure `ALLOWED_HOSTS`
+3. Set up a production database
+4. Configure a proper secret key
+5. Set up email service
+6. Use a production-grade web server (Nginx + Gunicorn)
 
-Command for Mac:
-```
-$  python3 manage.py createsuperuser
-```
+## Security Notes
 
-Command for Linux:
-```
-$  python3 manage.py createsuperuser
-```
+⚠️ **Important**: Before deploying to production:
+- Change the `SECRET_KEY` in settings.py
+- Set `DEBUG = False`
+- Configure proper `ALLOWED_HOSTS`
+- Use environment variables for sensitive data
+- Enable password validators
+- Set up HTTPS
+- Configure CSRF and security middleware properly
 
+## Contributing
 
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
 
-Then Add Email and Password
+## License
 
-**or Use Default Credentials**
+This project is available for educational and commercial use.
 
-*For HOD /SuperAdmin*
-Email: admin@admin.com
-Password: admin
+## Support
 
-*For Staff*
-Email: staff@staff.com
-Password: staff
-
-*For Student*
-Email: student@student.com
-Password: student
-
-
-
-## For Sponsor or Projects Enquiry
-1. Email - jobowonubi@gmail.com
-2. LinkedIn - [jobic10](https://www.linkedin.com/in/jobic10 "Owonubi Job Sunday on LinkedIn")
-2. Twitter - [jobic10](https://www.twitter.com/jobic10 "Owonubi Job Sunday on Twitter")
-
-
-
-## Project's Journey
-- [x] Admin/Staff/Student Login
-- [x] Add and Edit Course
-- [x] Add and Edit Staff
-- [x] Add and Edit Student
-- [x] Add and Edit Subject
-- [x] Upload Staff's Picture
-- [x] Upload Student's Picture
-- [x] Sidebar Active Status
-- [x] Named URLs
-- [x] Model Forms for adding  student
-- [x] Model Forms for all
-- [x] Views Permission (MiddleWareMixin)
-- [x] Attendance and Update Attendance
-- [x] Password Reset Via Email
-- [x] Apply For Leave
-- [x] Students Can Check Attendance
-- [x] Check Email Availability
-- [x] Reply to Leave Applications
-- [x] Reply to Feedback
-- [x] Admin View Attendance
-- [x] Password Change for Admin, Staff and Students using *set_password()*
-- [x] Admin Profile Edit
-- [x] Staff Profile Edit
-- [x] Student Profile Edit
-- [x] Student Dashboard Fixed
-- [x] Passing Page Title From View  - Improved
-- [x] Staff Dashboard Fixed
-- [x] Admin Dashboard Fixed
-- [x] Firebase Web Push Notifications
-- [x] Staff Add Student's Result
-- [x] Staff Edit Result Using CBVs (Class Based Views)
-- [x] Google CAPTCHA
-- [x] Student View Result
-- [x] Change all links to be dynamic
-- [x] Code Restructure - Very Important
-
-
-## Questions I asked While Developing This
-- https://stackoverflow.com/questions/63829896/is-there-a-specific-way-of-adding-apps-in-django/
-
-
-## Helpful Links
-- https://stackoverflow.com/questions/55969952/how-can-i-avoid-a-user-from-registering-an-already-used-email-in-django
-- https://stackoverflow.com/questions/7562573/how-do-i-get-django-forms-to-show-the-html-required-attribute
-- https://stackoverflow.com/questions/40910149/django-exists-versus-doesnotexist
-- https://www.edureka.co/community/80982/how-can-i-have-multiple-models-in-a-single-django-modelform
-- https://stackoverflow.com/questions/12848605/django-modelform-what-is-savecommit-false-used-for
-- https://simpleisbetterthancomplex.com/tutorial/2018/01/18/how-to-implement-multiple-user-types-with-django.html
-- https://stackoverflow.com/questions/32576348/how-can-i-create-django-modelform-for-an-abstract-model
-- https://www.fomfus.com/articles/how-to-use-email-as-username-for-django-authentication-removing-the-username
-- https://stackoverflow.com/questions/64145745/create-user-missing-1-required-positional-argument-username?noredirect=1#64145844
-- https://stackoverflow.com/questions/36059194/what-is-the-difference-between-json-dump-and-json-dumps-in-python
-- https://stackoverflow.com/questions/64188313/django-can-i-delete-apps-static-files-after-running-collectstatic/64189244#64189244
-- https://stackoverflow.com/questions/29416478/change-form-field-value-before-saving
-- https://support.google.com/mail/thread/38519529?hl=en
-- https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
-- https://stackoverflow.com/questions/3429084/why-do-i-get-an-object-is-not-iterable-error
+For issues, questions, or contributions, please open an issue in the repository.
